@@ -1,0 +1,11 @@
+.Toastify__toast--success {
+  background-color: var(--success) !important;
+}
+
+.Toastify__toast--warning {
+  background-color: var(--pink) !important;
+}
+
+.Toastify__toast--error {
+  background-color: var(--danger) !important;
+}

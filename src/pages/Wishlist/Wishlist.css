@@ -1,0 +1,29 @@
+/* Wishlist */
+
+.wishlist-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.card-dismiss {
+  color: var(--warning);
+}
+
+.card-dismiss:hover {
+  color: var(--warning);
+}
+
+@media screen and (min-width: 769px) and (max-width: 835px) {
+  .wishlist-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 836px) and (max-width: 1124px) {
+  .wishlist-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

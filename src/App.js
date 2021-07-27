@@ -1,35 +1,39 @@
-import './App.css';
-import { Link, Routes, Route } from "react-router-dom";
-import Cart from "./pages/Cart";
-import Category from "./pages/Category";
-import Home from "./pages/Home";
-import ProductDetails from "./pages/ProductDetails";
-import ProductListing from "./pages/ProductListing";
-import Wishlist from "./pages/Wishlist";
+import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Cart from "./pages/Cart/Cart";
+import Home from "./pages/Home/Home";
+import ProductDetails from "./pages/Product/ProductDetails/ProductDetails";
+import ProductListing from "./pages/Product/ProductListing/ProductListing";
+import Wishlist from "./pages/Wishlist/Wishlist";
 import Login from "./pages/Login";
-import Navbar from "./components/Navbar";
+import NotFound from "./pages/NotFound";
+import PrivateRoute from "./utils/PrivateRoute";
+import NavbarDesktop from "./components/Navbar/NavbarDesktop";
+
+import { useLogin } from "./context/AuthProvider";
+import MediaQuery from "react-responsive";
 
 function App() {
+  const { isLoggedIn } = useLogin();
 
   return (
     <div className="App">
-      <Navbar />
-      <nav>
-        <Link to="/wishlist">Wishlist</Link> ---
-        <Link to="/cart">Cart</Link> ---
-        <Link to="/login">Login</Link> ---
-        <Link to="/product-listing">ProductListing</Link> ---
-        <Link to="/category">Categories</Link> ---
-        <Link to="/">Home</Link> 
-      </nav>
+      <MediaQuery minDeviceWidth={769}>
+        <NavbarDesktop />
+      </MediaQuery>
+
       <Routes>
-        <Route path="/cart" element={<Cart />}/>
-        <Route path="/category" element={<Category />}/>
-        <Route path="/" element={<Home />}/>
-        <Route path="/login" element={<Login />}/>
-        <Route path="/product-details/:productID" element={<ProductDetails />}/>
-        <Route path="/product-listing" element={<ProductListing />}/>
-        <Route path="/wishlist" element={<Wishlist />}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/product/:productID" element={<ProductDetails />} />
+        <Route path="/product-listing" element={<ProductListing />} />
+        <PrivateRoute path="/cart" login={isLoggedIn} element={<Cart />} />
+        <PrivateRoute
+          path="/wishlist"
+          login={isLoggedIn}
+          element={<Wishlist />}
+        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

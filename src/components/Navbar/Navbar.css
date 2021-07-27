@@ -1,0 +1,178 @@
+@import url("https://fonts.googleapis.com/css2?family=Sofia&display=swap");
+
+.active-nav {
+  color: var(--secondary) !important;
+  font-weight: bold !important;
+}
+
+.logo span {
+  font-family: "Sofia", cursive;
+  color: var(--dark-blue);
+}
+
+/* Mobile Bottom Navbar */
+
+.mobile-nav {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 2;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  background-color: var(--white);
+  border-top: 0.5px solid var(--light-grey-2);
+  padding-top: 0.25em;
+}
+
+.mobile-nav .nav-1 {
+  padding: 0.25em 0;
+  position: relative;
+}
+
+.mobile-nav .nav-1 a {
+  text-decoration: none;
+}
+
+.mobile-nav .nav-1 .nav-2 {
+  color: var(--black-1);
+}
+
+.mobile-nav .nav-1 .nav-2 {
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+.mobile-nav .nav-1 .nav-2 a {
+  padding-top: 0.25em;
+}
+
+.mobile-nav .nav-1 .nav-2 .nav-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.mobile-nav .nav-1 .label-cart {
+  top: -0.15rem;
+  font-weight: normal !important;
+}
+
+/* Big Screen Top Navbar */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: var(--light-grey-1);
+  box-shadow: 0 5px 5px -5px var(--dark-grey-1);
+}
+
+.navbar .logo {
+  padding: 0.875em 1em 0.875em 3em;
+}
+
+.navbar .logo span {
+  font-size: 2rem;
+  padding-left: 0.5em;
+}
+
+.navbar .nav-icons {
+  width: 335px;
+  padding: 0.875em 3em 0.875em 1em;
+}
+
+.navbar .nav-icons .badge-icon a {
+  text-decoration: none;
+  color: var(--black-1);
+}
+
+.badge-icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.label-cart {
+  white-space: nowrap;
+  text-align: center;
+  padding: 0.1em 0.375em 0 0.375em;
+  height: 1.125rem;
+  background: var(--pink);
+  position: absolute;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: var(--white);
+  left: 1.25rem;
+  top: -0.5rem;
+}
+
+/* Mobile Products Navbar */
+
+.products-navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 200;
+  flex-flow: row nowrap;
+  background-color: var(--light-grey-1);
+  border-bottom: 0.5px solid var(--light-grey-2);
+  padding: 0.5em 0.75em;
+}
+
+.products-navbar .logo {
+  font-size: 1.5em;
+}
+
+.products-navbar .nav-icons {
+  justify-content: space-around;
+  height: 24px;
+  width: 90px;
+}
+
+.products-navbar .nav-icons .badge-icon {
+  padding-top: 0.2em;
+}
+
+.products-navbar .nav-icons .badge-icon svg {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+.products-navbar .nav-icons .badge-icon a {
+  color: var(--black-1);
+}
+
+.products-navbar .nav-icons .badge-icon .label-cart {
+  top: -0.4em;
+  left: 1.25em;
+  font-size: 0.8rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  line-height: 1.125rem;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    justify-content: center;
+    box-shadow: none;
+    border-bottom: 0.5px solid var(--light-grey-2);
+  }
+
+  .navbar .logo {
+    padding: 0.5em 0.75em;
+  }
+
+  .navbar .logo span {
+    font-size: 1.5em;
+    padding-left: 0.25em;
+  }
+
+  .navbar .nav-icons {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .navbar .nav-icons {
+    width: 350px;
+  }
+}
