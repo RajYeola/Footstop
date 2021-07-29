@@ -56,7 +56,7 @@ export default function WishlistDesktop() {
           ))}
         </div>
       ) : (
-        <div className="disp-flex flex-column align-center p-10">
+        <div className="disp-flex flex-column align-center pt-10">
           <h2>Add Items to wishlist</h2>
           <NavLink to="/product-listing">
             <button className="btn my-05">Go to Products Page</button>

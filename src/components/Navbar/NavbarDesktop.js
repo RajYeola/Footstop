@@ -1,8 +1,7 @@
 import "./Navbar.css";
-import logo from "../../assets/football(32).png";
 import { useData } from "../../context/data-context";
 import { RiShoppingCartLine } from "react-icons/ri";
-import { IoHeartOutline, IoPersonOutline } from "react-icons/io5";
+import { IoHeartOutline, IoPersonOutline, IoFootball } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import { BiFootball } from "react-icons/bi";
 
@@ -14,7 +13,7 @@ export default function NavbarDesktop() {
     <div className="navbar width-100 disp-flex justify-between align-center">
       <NavLink to="/">
         <div className="logo disp-flex align-center">
-          <img src={logo} alt="logo" />
+          <IoFootball className="logo-football" />
           <span>Footstop</span>
         </div>
       </NavLink>

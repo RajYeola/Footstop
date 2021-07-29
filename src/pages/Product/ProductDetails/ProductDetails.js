@@ -1,6 +1,6 @@
 import MediaQuery from "react-responsive";
-import { ProductListingDesktop } from "./ProductDetailsDesktop";
-import { ProductListingMobile } from "./ProductDetailsMobile";
+import { ProductDetailsDesktop } from "./ProductDetailsDesktop";
+import { ProductDetailsMobile } from "./ProductDetailsMobile";
 import "../Products.css";
 
 export default function ProductDetails() {
@@ -8,10 +8,10 @@ export default function ProductDetails() {
     <div>
       <div>
         <MediaQuery maxDeviceWidth={768}>
-          <ProductListingMobile />
+          <ProductDetailsMobile />
         </MediaQuery>
         <MediaQuery minDeviceWidth={769}>
-          <ProductListingDesktop />
+          <ProductDetailsDesktop />
         </MediaQuery>
       </div>
     </div>

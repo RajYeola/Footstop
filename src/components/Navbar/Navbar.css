@@ -7,6 +7,7 @@
 
 .logo span {
   font-family: "Sofia", cursive;
+  font-display: swap;
   color: var(--dark-blue);
 }
 
@@ -71,9 +72,15 @@
   padding: 0.875em 1em 0.875em 3em;
 }
 
+.navbar .logo .logo-football {
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--primary);
+}
+
 .navbar .logo span {
   font-size: 2rem;
-  padding-left: 0.5em;
+  padding-left: 0.25em;
 }
 
 .navbar .nav-icons {
@@ -159,6 +166,11 @@
 
   .navbar .logo {
     padding: 0.5em 0.75em;
+  }
+
+  .navbar .logo .logo-football {
+    width: 2rem;
+    height: 2rem;
   }
 
   .navbar .logo span {

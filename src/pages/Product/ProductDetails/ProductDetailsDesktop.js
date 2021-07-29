@@ -6,7 +6,7 @@ import {
   addToWishlistToast,
 } from "../../../utils/Toast/toasts";
 
-export function ProductListingDesktop() {
+export function ProductDetailsDesktop() {
   const { data, dispatch } = useData();
   const { productID } = useParams();
 

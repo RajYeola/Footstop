@@ -3,7 +3,7 @@ import { useData } from "../../../context/data-context";
 import NavbarPLMobile from "../../../components/Navbar/NavbarPLMobile";
 import { RiHeartLine, RiShoppingCartLine } from "react-icons/ri";
 
-export function ProductListingMobile() {
+export function ProductDetailsMobile() {
   const { data, dispatch } = useData();
   const { productID } = useParams();
 

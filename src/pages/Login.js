@@ -21,21 +21,21 @@ export default function Login() {
       <MediaQuery maxDeviceWidth={769}>
         <HeaderMobile />
       </MediaQuery>
-      <div className="view-container p-10 disp-flex flex-column align-center">
+      <div className="view-container pt-10 disp-flex flex-column align-center">
         {isLoggedIn ? (
           <h1>You are Logged in</h1>
         ) : (
           <div className="disp-flex flex-column width-100 align-center">
             <input
               type="email"
-              className="input-basic my-05"
+              className="input-basic my-05 width-75"
               placeholder="Email"
               onChange={(e) => setEmailInput(e.target.value)}
             />
-            <div className="disp-flex flex-column">
+            <div className="disp-flex flex-column width-75">
               <input
                 type={showPassword ? "text" : "password"}
-                className="input-basic my-05"
+                className="input-basic my-05 width-100"
                 placeholder="Password"
                 onChange={(e) => setPasswordInput(e.target.value)}
               />

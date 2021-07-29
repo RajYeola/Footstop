@@ -1,5 +1,5 @@
 @import url("https://development-rapidui.netlify.app/css/components.css");
-@import url("https://use.typekit.net/zih5skt.css");
+@import url("https://use.typekit.net/xei7jdz.css");
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700&display=swap");
 
 * {
@@ -12,6 +12,7 @@ body {
   font-family: muli, sans-serif;
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 .view-container {
@@ -20,10 +21,6 @@ body {
 
 button {
   cursor: pointer;
-}
-
-.p-10 {
-  padding-top: 10rem;
 }
 
 a {
@@ -42,9 +39,5 @@ a {
   .view-container {
     margin-top: 3.5em;
     margin-bottom: 4em;
-  }
-
-  .input-basic {
-    width: 75%;
   }
 }
