@@ -142,6 +142,11 @@ export const dataReducer = (state, action) => {
         brandFilter: [],
         priceSlider: 1000,
       };
+    case "PLACE_ORDER":
+      return {
+        ...state,
+        cartItems: [],
+      };
     default:
       return { ...state };
   }

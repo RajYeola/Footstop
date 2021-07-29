@@ -10,6 +10,7 @@ import {
   removeFromCartToast,
 } from "../../utils/Toast/toasts";
 
+ReactModal.setAppElement("#root");
 export default function CartDesktop() {
   const { state, dispatch } = useData();
   const { cartItems } = state;
@@ -21,7 +22,7 @@ export default function CartDesktop() {
         <div className="cart-container">
           <div className="cart-products disp-flex justify-center my-1">
             {cartItems.map((item) => (
-              <div className="card-horizontal my-1">
+              <div className="card-horizontal my-1" key={item.id}>
                 <Link to={`/product/${item.id}`}>
                   <img src={item.image} alt="" className="card-header" />
                 </Link>
@@ -148,8 +149,8 @@ export default function CartDesktop() {
               </div>
               <button
                 onClick={() => {
+                  dispatch({ type: "PLACE_ORDER" });
                   setIsOpenModal(true);
-                  cartItems.length = 0;
                 }}
                 disabled={cartItems.length === 0}
                 className={`btn btn-secondary btn-place-order text-uppercase text-bold my-05 ${

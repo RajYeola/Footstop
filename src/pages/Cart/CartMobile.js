@@ -5,6 +5,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import { useState } from "react";
 import ReactModal from "react-modal";
 
+ReactModal.setAppElement("#root");
 export default function CartMobile() {
   const { state, dispatch } = useData();
   const { cartItems } = state;
@@ -25,7 +26,7 @@ export default function CartMobile() {
       </div>
       <div>
         {cartItems.map((item) => (
-          <div className="card-horizontal-mobile">
+          <div className="card-horizontal-mobile" key={item.id}>
             <div className="card-horizontal-body-mobile disp-flex">
               <Link to={`/product/${item.id}`} className="card-header-mobile">
                 <img src={item.image} alt="" />
@@ -145,8 +146,8 @@ export default function CartMobile() {
         </div>
         <button
           onClick={() => {
+            dispatch({ type: "PLACE_ORDER" });
             setIsOpenModal(true);
-            cartItems.length = 0;
           }}
           className={`btn btn-secondary btn-place-order text-uppercase text-bold ${
             cartItems.length === 0 ? `opacity-06` : ``
