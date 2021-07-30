@@ -57,6 +57,7 @@ export default function Login() {
               navigate("/");
               cartItems.length = 0;
               wishlistItems.length = 0;
+              localStorage.removeItem("login");
             } else {
               loginWithUserCredentials(emailInput, passwordInput);
             }
