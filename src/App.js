@@ -1,5 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa";
 // import Cart from "./pages/Cart/Cart";
 // import Wishlist from "./pages/Wishlist/Wishlist";
 import Home from "./pages/Home/Home";
@@ -35,7 +36,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        <Suspense fallback={<i className="fas fa-spinner spin fa-5x"></i>}>
+        <Suspense
+          fallback={
+            <div className="view-container pt-10 disp-flex justify-center align-center">
+              <FaSpinner className="spin" />
+            </div>
+          }
+        >
           <Routes>
             <Route path="/product/:productID" element={<ProductDetails />} />
             <Route path="/product-listing" element={<ProductListing />} />

@@ -27,6 +27,10 @@ a {
   text-decoration: none;
 }
 
+.fs-spinner {
+  font-size: 5rem;
+}
+
 /* Login page */
 .account-actions-container .input-email,
 .account-actions-container .input-password {
@@ -50,6 +54,10 @@ a {
   .account-actions-container .input-email,
   .account-actions-container .input-password {
     width: 60%;
+  }
+
+  .fs-spinner {
+    font-size: 2.5rem;
   }
 }
 
