@@ -33,30 +33,27 @@ function App() {
         <NavbarDesktop />
       </MediaQuery>
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-
-        <Suspense
-          fallback={
-            <div className="view-container pt-10 disp-flex justify-center align-center">
-              <FaSpinner className="spin fs-spinner" />
-            </div>
-          }
-        >
-          <Routes>
-            <Route path="/product/:productID" element={<ProductDetails />} />
-            <Route path="/product-listing" element={<ProductListing />} />
-            <PrivateRoute path="/cart" login={isLoggedIn} element={<Cart />} />
-            <PrivateRoute
-              path="/wishlist"
-              login={isLoggedIn}
-              element={<Wishlist />}
-            />
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
-      </Routes>
+      <Suspense
+        fallback={
+          <div className="view-container pt-10 disp-flex justify-center align-center">
+            <FaSpinner className="spin fs-spinner" />
+          </div>
+        }
+      >
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/product/:productID" element={<ProductDetails />} />
+          <Route path="/product-listing" element={<ProductListing />} />
+          <PrivateRoute path="/cart" login={isLoggedIn} element={<Cart />} />
+          <PrivateRoute
+            path="/wishlist"
+            login={isLoggedIn}
+            element={<Wishlist />}
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }
