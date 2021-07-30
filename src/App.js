@@ -39,7 +39,7 @@ function App() {
         <Suspense
           fallback={
             <div className="view-container pt-10 disp-flex justify-center align-center">
-              <FaSpinner className="spin" />
+              <FaSpinner className="spin fs-spinner" />
             </div>
           }
         >
