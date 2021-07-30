@@ -27,6 +27,12 @@ a {
   text-decoration: none;
 }
 
+/* Login page */
+.account-actions-container .input-email,
+.account-actions-container .input-password {
+  width: 25%;
+}
+
 @media screen and (max-width: 768px) {
   h1 {
     font-size: 1.5rem;
@@ -39,5 +45,17 @@ a {
   .view-container {
     margin-top: 3.5em;
     margin-bottom: 4em;
+  }
+
+  .account-actions-container .input-email,
+  .account-actions-container .input-password {
+    width: 60%;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 950px) {
+  .account-actions-container .input-email,
+  .account-actions-container .input-password {
+    width: 40%;
   }
 }

@@ -25,14 +25,14 @@ export default function Login() {
         {isLoggedIn ? (
           <h1>You are Logged in</h1>
         ) : (
-          <div className="disp-flex flex-column width-100 align-center">
+          <div className="account-actions-container disp-flex flex-column width-100 align-center">
             <input
               type="email"
-              className="input-basic my-05 width-75"
+              className="input-basic my-05 input-email"
               placeholder="Email"
               onChange={(e) => setEmailInput(e.target.value)}
             />
-            <div className="disp-flex flex-column width-75">
+            <div className="disp-flex flex-column input-password">
               <input
                 type={showPassword ? "text" : "password"}
                 className="input-basic my-05 width-100"
