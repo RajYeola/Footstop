@@ -1,5 +1,5 @@
 const axios = require("axios");
-const url = "http://localhost:5000";
+const url = "https://footstop-api.herokuapp.com/";
 
 export const signUp = (userInfo) => axios.post(`${url}/user/signup`, userInfo);
 export const signIn = (userInfo) => axios.post(`${url}/user/signin`, userInfo);
