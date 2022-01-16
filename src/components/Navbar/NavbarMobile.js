@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { BiFootball } from "react-icons/bi";
 import { IoPersonOutline } from "react-icons/io5";
 import { RiShoppingCartLine, RiHeartLine } from "react-icons/ri";
-import { useData } from "../../context/data-context";
+import { useData } from "../../context/dataContext";
 
 export default function NavbarMobile() {
   const { state } = useData();
@@ -41,7 +41,7 @@ export default function NavbarMobile() {
           activeClassName="active-nav"
         >
           <RiShoppingCartLine className="nav-icon"></RiShoppingCartLine>
-          <span className="label label-cart">{cartItems.length}</span>
+          <span className="label label-cart">{cartItems?.length}</span>
           <p>Cart</p>
         </NavLink>
       </div>

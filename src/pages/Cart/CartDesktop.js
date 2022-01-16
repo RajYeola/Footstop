@@ -1,4 +1,4 @@
-import { useData } from "../../context/data-context";
+import { useData } from "../../context/dataContext";
 import { Link } from "react-router-dom";
 import { TiTick } from "react-icons/ti";
 import { AiOutlineCloseCircle } from "react-icons/ai";
@@ -9,10 +9,18 @@ import {
   moveToWishlistToast,
   removeFromCartToast,
 } from "../../utils/Toast/toasts";
+import {
+  moveProductToWishlist,
+  removeProductFromCart,
+  updateProductInCart,
+} from "../../actions/index";
+import { clearCart } from "../../api/index";
+import { itemInWishlist } from "../../utils/utils";
 
 ReactModal.setAppElement("#root");
 export default function CartDesktop() {
   const { state, dispatch } = useData();
+  const { wishlistItems } = state;
   const { cartItems } = state;
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -22,33 +30,33 @@ export default function CartDesktop() {
         <div className="cart-container">
           <div className="cart-products disp-flex justify-center my-1">
             {cartItems.map((item) => (
-              <div className="card-horizontal my-1" key={item.id}>
-                <Link to={`/product/${item.id}`}>
-                  <img src={item.image} alt="" className="card-header" />
+              <div className="card-horizontal my-1" key={item._id._id}>
+                <Link to={`/product/${item._id._id}`}>
+                  <img src={item._id.image} alt="" className="card-header" />
                 </Link>
                 <div className="card-horizontal-body">
                   <div className="card-information">
-                    <h4 className="card-heading text-bold">{item.brand}</h4>
-                    <Link to={`/product/${item.id}`}>
-                      <p>{item.description}</p>
+                    <h4 className="card-heading text-bold">{item._id.brand}</h4>
+                    <Link to={`/product/${item._id._id}`}>
+                      <p>{item._id.category}</p>
                     </Link>
                   </div>
                   <div className="card-update-info">
                     <div className="cart-qty">
                       <span>Qty</span>
                       <button
-                        onClick={() =>
-                          dispatch({ type: "INC_QUANTITY", payload: item })
-                        }
+                        onClick={() => {
+                          updateProductInCart(item, dispatch, "increase");
+                        }}
                         className="inc-qty text-bold"
                       >
                         +
                       </button>
                       <span>{item.qty}</span>
                       <button
-                        onClick={() =>
-                          dispatch({ type: "DEC_QUANTITY", payload: item })
-                        }
+                        onClick={() => {
+                          updateProductInCart(item, dispatch, "decrease");
+                        }}
                         className={`dec-qty text-bold ${
                           item.qty === 1 ? `opacity-03` : ``
                         }`}
@@ -65,38 +73,48 @@ export default function CartDesktop() {
                         {" "}
                         ₹
                         {Math.floor(
-                          (item.price / (100 - item.discount)) * 100
-                        ) - Math.floor(item.price)}
+                          (item._id.price / (100 - item._id.discount)) * 100
+                        ) - Math.floor(item._id.price)}
                       </span>
                     </div>
                     <div className="price-info-top">
                       <div className="original-price">
                         ₹
-                        {Math.floor((item.price / (100 - item.discount)) * 100)}
+                        {Math.floor(
+                          (item._id.price / (100 - item._id.discount)) * 100
+                        )}
                       </div>
-                      <div className="discount"> ({item.discount}%) </div>
+                      <div className="discount"> ({item._id.discount}%) </div>
                     </div>
-                    <div className="net-price">₹ {item.price}</div>
+                    <div className="net-price">₹ {item._id.price}</div>
                     <div className="cart-actions">
                       <div
                         onClick={() => {
-                          dispatch({ type: "REMOVE_FROM_CART", payload: item });
+                          removeProductFromCart(item, dispatch);
                           removeFromCartToast();
                         }}
                         className="btn-delete"
                       >
                         Remove
                       </div>
-                      <div
-                        onClick={() => {
-                          dispatch({ type: "MOVE_TO_WISHLIST", payload: item });
-                          moveToWishlistToast();
-                        }}
-                        className="btn-save-wishlist"
-                      >
-                        <i className="far fa-heart"></i>
-                        <span>Move to Wishlist</span>
-                      </div>
+                      {itemInWishlist(item._id, wishlistItems) ? (
+                        <Link to="/wishlist">
+                          <div className="btn-save-wishlist color-primary">
+                            <span>Go to Wishlist</span>
+                          </div>
+                        </Link>
+                      ) : (
+                        <div
+                          onClick={() => {
+                            moveProductToWishlist(item, dispatch);
+                            moveToWishlistToast();
+                          }}
+                          className="btn-save-wishlist"
+                        >
+                          <i className="far fa-heart"></i>
+                          <span>Move to Wishlist</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -106,8 +124,8 @@ export default function CartDesktop() {
           <div className="cart-place-order my-1">
             <div className="cart-place-order-container">
               <h4 className="my-05">
-                Price Details ({cartItems.length}{" "}
-                {cartItems.length > 1 ? "items" : "item"})
+                Price Details ({cartItems?.length}{" "}
+                {cartItems?.length > 1 ? "items" : "item"})
               </h4>
               <div className="cart-price-details py-05">
                 <div className="disp-flex justify-between py-05">
@@ -117,7 +135,8 @@ export default function CartDesktop() {
                     {cartItems.reduce((acc, curr) => {
                       return Math.floor(
                         parseInt(acc) +
-                          ((curr.price * curr.qty) / (100 - curr.discount)) *
+                          ((curr._id.price * curr.qty) /
+                            (100 - curr._id.discount)) *
                             100
                       );
                     }, 0)}
@@ -130,9 +149,10 @@ export default function CartDesktop() {
                     {cartItems.reduce((acc, curr) => {
                       return Math.floor(
                         parseInt(acc) +
-                          (((curr.price * curr.qty) / (100 - curr.discount)) *
+                          (((curr._id.price * curr.qty) /
+                            (100 - curr._id.discount)) *
                             100 -
-                            curr.price)
+                            curr._id.price)
                       );
                     }, 0)}
                   </span>
@@ -143,18 +163,19 @@ export default function CartDesktop() {
                 <span>
                   ₹{" "}
                   {cartItems.reduce((acc, curr) => {
-                    return parseInt(acc) + parseInt(curr.price * curr.qty);
+                    return parseInt(acc) + parseInt(curr._id.price * curr.qty);
                   }, 0)}
                 </span>
               </div>
               <button
                 onClick={() => {
+                  clearCart();
                   dispatch({ type: "PLACE_ORDER" });
                   setIsOpenModal(true);
                 }}
-                disabled={cartItems.length === 0}
+                disabled={cartItems?.length === 0}
                 className={`btn btn-secondary btn-place-order text-uppercase text-bold my-05 ${
-                  cartItems.length === 0 ? `opacity-06` : ``
+                  cartItems?.length === 0 ? `opacity-06` : ``
                 }`}
               >
                 Place Order

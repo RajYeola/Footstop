@@ -1,21 +1,20 @@
-import cart from "../assets/icon-cart.png"
-import wishlist from "../assets/heart.png"
-import {useData} from "../context/data-context"; 
+import cart from "../assets/icon-cart.png";
+import wishlist from "../assets/heart.png";
+import { useData } from "../context/dataContext";
 
 export default function Navbar() {
+  const { state } = useData();
 
-   const {state} = useData();
-
-   return(
-      <div>
-         <div className="badge-icon">
-	         <img src={wishlist} alt="wishlist"/>
-	         <span className="label label-cart">{state.wishlistItems.length}</span>
-         </div>
-         <div className="badge-icon">
-	         <img src={cart} alt="cart"/>
-	         <span className="label label-cart">{state.cartItems.length}</span>
-         </div>
+  return (
+    <div>
+      <div className="badge-icon">
+        <img src={wishlist} alt="wishlist" />
+        <span className="label label-cart">{state.wishlistItems?.length}</span>
       </div>
-   )
+      <div className="badge-icon">
+        <img src={cart} alt="cart" />
+        <span className="label label-cart">{state.cartItems?.length}</span>
+      </div>
+    </div>
+  );
 }

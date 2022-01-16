@@ -11,7 +11,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 // import ProductDetails from "./pages/Product/ProductDetails/ProductDetails";
 // import ProductListing from "./pages/Product/ProductListing/ProductListing";
 import { lazy, Suspense } from "react";
-import { useLogin } from "./context/AuthProvider";
+import { useAuth } from "./context/authContext";
 import MediaQuery from "react-responsive";
 const Cart = lazy(() => import("./pages/Cart/Cart"));
 const Wishlist = lazy(() => import("./pages/Wishlist/Wishlist"));
@@ -25,7 +25,7 @@ const Login = lazy(() => import("./pages/Login"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
-  const { isLoggedIn } = useLogin();
+  const { isLoggedIn } = useAuth();
 
   return (
     <div className="App">

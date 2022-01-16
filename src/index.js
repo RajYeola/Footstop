@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
-import DataProvider from "./context/data-context";
-import LoginProvider from "./context/AuthProvider";
+import DataProvider from "./context/dataContext";
+import LoginProvider from "./context/authContext";
 
 ReactDOM.render(
   <React.StrictMode>

@@ -2,7 +2,7 @@ import "./Navbar.css";
 import { NavLink } from "react-router-dom";
 import { IoHeartOutline, IoPersonOutline } from "react-icons/io5";
 import { RiShoppingCartLine } from "react-icons/ri";
-import { useData } from "../../context/data-context";
+import { useData } from "../../context/dataContext";
 
 export default function NavbarPLMobile() {
   const { state } = useData();
@@ -28,7 +28,7 @@ export default function NavbarPLMobile() {
           <NavLink end to="/cart" className="nav-1">
             <RiShoppingCartLine />
             <span className="label label-cart disp-flex align-center justify-center">
-              {cartItems.length}
+              {cartItems?.length}
             </span>
           </NavLink>
         </div>

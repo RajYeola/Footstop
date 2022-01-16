@@ -1,17 +1,20 @@
-import { useData } from "../../context/data-context";
+import { useData } from "../../context/dataContext";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import { moveProductToCart, removeProductFromWishlist } from "../../actions";
+import { itemInCart } from "../../utils/utils";
 
 export function WishlistMobile() {
   const { state, dispatch } = useData();
-  const { wishlistItems } = state;
+  const { wishlistItems, cartItems } = state;
+
   return (
     <div>
       <div className="view-container">
-        {wishlistItems.length !== 0 ? (
+        {wishlistItems?.length !== 0 ? (
           <div className="disp-flex">
-            {wishlistItems.map((item) => (
-              <div className="card" key={item.id}>
+            {wishlistItems.map(({ _id: item }) => (
+              <div className="card" key={item._id}>
                 <img
                   src={item.image}
                   alt="card-product"
@@ -30,21 +33,27 @@ export function WishlistMobile() {
                   </div>
                 </div>
                 <div
-                  onClick={() =>
-                    dispatch({ type: "REMOVE_FROM_WISHLIST", payload: item })
-                  }
+                  onClick={() => removeProductFromWishlist(item, dispatch)}
                   className="card-dismiss"
                 >
                   <AiOutlineCloseCircle />
                 </div>
-                <button
-                  onClick={() =>
-                    dispatch({ type: "MOVE_TO_CART", payload: item })
-                  }
-                  className="btn btn-icon btn-secondary my-1 mx-05"
-                >
-                  Move to Cart
-                </button>
+
+                {itemInCart(item, cartItems) ? (
+                  <Link to="/cart">
+                    {" "}
+                    <button className="btn btn-icon btn-secondary my-1 mx-05">
+                      Go to Cart
+                    </button>
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => moveProductToCart(item, dispatch)}
+                    className="btn btn-icon btn-secondary my-1 mx-05"
+                  >
+                    Move to Cart
+                  </button>
+                )}
               </div>
             ))}
           </div>

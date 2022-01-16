@@ -1,4 +1,4 @@
-import { useData } from "../../context/data-context";
+import { useData } from "../../context/dataContext";
 import "./SortFilterMobile.css";
 import { IoFilterOutline } from "react-icons/io5";
 import { BiSort } from "react-icons/bi";
@@ -158,11 +158,11 @@ export default function SortFilterMobile() {
                 <li className="filter-div filter-price-range py-1">
                   <h4 className="filter-name text-bold">Price Range</h4>
                   <div className="disp-flex align-center">
-                    <span>₹ 0 - {priceSlider}</span>
+                    <span>₹ 249 - {priceSlider}</span>
                     <input
                       type="range"
-                      min="0"
-                      max="1000"
+                      min="249"
+                      max="2449"
                       step="100"
                       value={priceSlider}
                       onChange={(e) =>

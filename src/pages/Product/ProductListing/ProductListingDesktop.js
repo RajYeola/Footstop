@@ -1,4 +1,5 @@
-import { useData } from "../../../context/data-context";
+import { useData } from "../../../context/dataContext";
+import { useAuth } from "../../../context/authContext";
 import { ProductSidebar } from "./ProductSidebar/ProductSidebar";
 import { RiShoppingCartLine, RiHeartLine, RiHeartFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -8,9 +9,17 @@ import {
   addToWishlistToast,
   removeFromWishlistToast,
 } from "../../../utils/Toast/toasts";
+import {
+  addProductToCart,
+  addProductToWishlist,
+  removeProductFromWishlist,
+} from "../../../actions/index";
+import { itemInCart, itemInWishlist } from "../../../utils/utils";
 
 export default function ProductListingDesktop() {
+  // const navigate = useNavigate();
   const { state, dispatch, data } = useData();
+  const { token } = useAuth();
   const {
     sortBy,
     showFastDelivery,
@@ -24,6 +33,7 @@ export default function ProductListingDesktop() {
 
   const getSortedData = (products, sortBy) => {
     const productList = [...products];
+
     if (sortBy && sortBy === "PRICE_HIGH_TO_LOW") {
       return productList.sort((a, b) => b["price"] - a["price"]);
     }
@@ -46,16 +56,14 @@ export default function ProductListingDesktop() {
     products = products
       .filter(({ inStock }) => (showInventoryAll ? true : inStock))
       .filter(({ fastDelivery }) => (showFastDelivery ? fastDelivery : true))
-      .filter(({ price }) => price < Number(priceSlider));
-    if (categoryFilter.length > 0) {
-      products = products.filter((product) =>
-        categoryFilter.includes(product.category)
+      .filter(({ price }) => price <= Number(priceSlider));
+    if (categoryFilter?.length > 0) {
+      products = products.filter(({ category }) =>
+        categoryFilter.includes(category)
       );
     }
-    if (brandFilter.length > 0) {
-      products = products.filter((product) =>
-        brandFilter.includes(product.brand)
-      );
+    if (brandFilter?.length > 0) {
+      products = products.filter(({ brand }) => brandFilter.includes(brand));
     }
     return products;
   };
@@ -71,7 +79,7 @@ export default function ProductListingDesktop() {
 
   return (
     <div>
-      {filteredData.length === 0 ? (
+      {filteredData?.length === 0 ? (
         <div className="products-page-container disp-flex width-100">
           <ProductSidebar />
           <div className="disp-flex flex-column unavailable-text text-center">
@@ -84,10 +92,10 @@ export default function ProductListingDesktop() {
           <ProductSidebar />
           <div className="products-container">
             {filteredData.map((item) => (
-              <div className="card mx-1 my-1" key={item.id}>
+              <div className="card mx-1 my-1" key={item._id}>
                 <div className={`${item.inStock ? `` : `card-out-of-stock`}`}>
-                  <Link to={`/product/${item.id}`}>
-                    <div key={item.id}>
+                  <Link to={`/product/${item._id}`}>
+                    <div key={item._id}>
                       <img
                         src={item.image}
                         alt="card-product"
@@ -115,44 +123,61 @@ export default function ProductListingDesktop() {
                       </div>
                     </div>
                   </Link>
-                  {wishlistItems.some(({ id }) => item.id === id) ? (
+                  {wishlistItems && itemInWishlist(item, wishlistItems) ? (
                     <RiHeartFill
                       className="card-wishlist"
                       onClick={() => {
-                        dispatch({
-                          type: "REMOVE_FROM_WISHLIST",
-                          payload: item,
-                        });
+                        removeProductFromWishlist(item, dispatch);
                         removeFromWishlistToast();
                       }}
                     />
-                  ) : (
+                  ) : token ? (
                     <button className="card-wishlist" disabled={!item.inStock}>
                       <RiHeartLine
                         onClick={() => {
-                          dispatch({ type: "ADD_TO_WISHLIST", payload: item });
-                          addToWishlistToast();
+                          if (item.inStock) {
+                            addProductToWishlist(item, dispatch);
+                            addToWishlistToast();
+                          }
                         }}
                       />
                     </button>
+                  ) : (
+                    <Link to="/login">
+                      <button className="card-wishlist">
+                        <RiHeartLine />
+                      </button>
+                    </Link>
                   )}
-                  <button
-                    onClick={() => {
-                      dispatch({ type: "ADD_TO_CART", payload: item });
-                      addToCartToast();
-                    }}
-                    className="btn btn-icon btn-secondary my-1 mx-05"
-                    disabled={!item.inStock}
-                  >
-                    <RiShoppingCartLine />{" "}
-                    {cartItems.some(({ id }) => item.id === id) ? (
-                      <Link to="/cart" className="btn-go-to-cart">
-                        Go to Cart
-                      </Link>
-                    ) : (
-                      <span>Add to Cart</span>
-                    )}
-                  </button>
+                  {/* {console.log(item.inStock)} */}
+                  {cartItems && itemInCart(item, cartItems) ? (
+                    <Link to="/cart">
+                      <button className="btn btn-icon btn-secondary my-1 mx-05 btn-go-to-cart">
+                        <RiShoppingCartLine />
+                        <span>Go to Cart</span>
+                      </button>
+                    </Link>
+                  ) : token ? (
+                    <button
+                      onClick={() => {
+                        addProductToCart(item, dispatch);
+                        addToCartToast();
+                      }}
+                      className="btn btn-icon btn-secondary my-1 mx-05"
+                      disabled={!item.inStock}
+                    >
+                      <RiShoppingCartLine /> <span>Add to Cart</span>
+                    </button>
+                  ) : (
+                    <Link to="/login">
+                      <button
+                        className="btn btn-icon btn-secondary my-1 mx-05"
+                        disabled={!item.inStock}
+                      >
+                        <RiShoppingCartLine /> <span>Add to Cart</span>
+                      </button>
+                    </Link>
+                  )}
                 </div>
                 <div
                   className={

@@ -1,9 +1,17 @@
-import { useData } from "../../../context/data-context";
+import { useData } from "../../../context/dataContext";
+import { useAuth } from "../../../context/authContext";
 import { RiShoppingCartLine, RiHeartLine, RiHeartFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import {
+  addProductToCart,
+  addProductToWishlist,
+  removeProductFromWishlist,
+} from "../../../actions/index";
+import { itemInCart, itemInWishlist } from "../../../utils/utils";
 
 export default function ProductListingMobile() {
   const { state, dispatch, data } = useData();
+  const { token } = useAuth();
   const {
     sortBy,
     showFastDelivery,
@@ -39,13 +47,13 @@ export default function ProductListingMobile() {
     products = products
       .filter(({ inStock }) => (showInventoryAll ? true : inStock))
       .filter(({ fastDelivery }) => (showFastDelivery ? fastDelivery : true))
-      .filter(({ price }) => price < Number(priceSlider));
-    if (categoryFilter.length > 0) {
+      .filter(({ price }) => price <= Number(priceSlider));
+    if (categoryFilter?.length > 0) {
       products = products.filter((product) =>
         categoryFilter.includes(product.category)
       );
     }
-    if (brandFilter.length > 0) {
+    if (brandFilter?.length > 0) {
       products = products.filter((product) =>
         brandFilter.includes(product.brand)
       );
@@ -64,7 +72,7 @@ export default function ProductListingMobile() {
 
   return (
     <div>
-      {filteredData.length === 0 ? (
+      {filteredData?.length === 0 ? (
         <div className="products-container">
           <div className="disp-flex flex-column unavailable-text text-center">
             <h4>No products available</h4>
@@ -74,10 +82,10 @@ export default function ProductListingMobile() {
       ) : (
         <div className="products-container">
           {filteredData.map((item) => (
-            <div className="card" key={item.id}>
+            <div className="card" key={item._id}>
               <div className={`${item.inStock ? `` : `card-out-of-stock`}`}>
-                <Link to={`/product/${item.id}`}>
-                  <div key={item.id}>
+                <Link to={`/product/${item._id}`}>
+                  <div key={item._id}>
                     <img
                       src={item.image}
                       alt="card-product"
@@ -105,37 +113,48 @@ export default function ProductListingMobile() {
                     </div>
                   </div>
                 </Link>
-                <button
-                  onClick={() =>
-                    dispatch({ type: "ADD_TO_CART", payload: item })
-                  }
-                  className="btn btn-icon btn-secondary"
-                  disabled={!item.inStock}
-                >
-                  <RiShoppingCartLine />{" "}
-                  {cartItems.some(({ id }) => item.id === id) ? (
-                    <Link className="btn-go-to-cart" to="/cart">
-                      Go to Cart
-                    </Link>
-                  ) : (
+
+                {cartItems && itemInCart(item, cartItems) ? (
+                  <Link to="/cart">
+                    <button className="btn btn-icon btn-secondary btn-go-to-cart">
+                      <RiShoppingCartLine />
+                      <span>Go to Cart</span>
+                    </button>
+                  </Link>
+                ) : token ? (
+                  <button
+                    onClick={() => addProductToCart(item, dispatch)}
+                    className="btn btn-icon btn-secondary"
+                    disabled={!item.inStock}
+                  >
+                    <RiShoppingCartLine />
                     <span>Add to Cart</span>
-                  )}
-                </button>
-                {wishlistItems.some(({ id }) => item.id === id) ? (
+                  </button>
+                ) : (
+                  <Link to="/login">
+                    <button className="btn btn-icon btn-secondary">
+                      <RiShoppingCartLine />
+                      <span>Add to Cart</span>{" "}
+                    </button>
+                  </Link>
+                )}
+                {wishlistItems && itemInWishlist(item, wishlistItems) ? (
                   <RiHeartFill
                     className="card-wishlist"
-                    onClick={() =>
-                      dispatch({ type: "REMOVE_FROM_WISHLIST", payload: item })
-                    }
+                    onClick={() => removeProductFromWishlist(item, dispatch)}
                   />
-                ) : (
+                ) : token ? (
                   <button disabled={!item.inStock} className="card-wishlist">
                     <RiHeartLine
-                      onClick={() =>
-                        dispatch({ type: "ADD_TO_WISHLIST", payload: item })
-                      }
+                      onClick={() => addProductToWishlist(item, dispatch)}
                     />
                   </button>
+                ) : (
+                  <Link to="/login">
+                    <button className="card-wishlist">
+                      <RiHeartLine />
+                    </button>
+                  </Link>
                 )}
               </div>
               <div

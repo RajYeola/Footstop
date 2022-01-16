@@ -1,5 +1,5 @@
 import "./Navbar.css";
-import { useData } from "../../context/data-context";
+import { useData } from "../../context/dataContext";
 import { RiShoppingCartLine } from "react-icons/ri";
 import { IoHeartOutline, IoPersonOutline, IoFootball } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
@@ -48,7 +48,7 @@ export default function NavbarDesktop() {
             activeClassName="active-nav"
           >
             <RiShoppingCartLine />
-            <span className="label label-cart">{cartItems.length}</span>
+            <span className="label label-cart">{cartItems?.length}</span>
             <span className="icon-name">Cart</span>
           </NavLink>
         </div>

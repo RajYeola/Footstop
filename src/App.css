@@ -31,9 +31,15 @@ a {
   font-size: 5rem;
 }
 
+.pt-9 {
+  padding-top: 9em;
+}
+
 /* Login page */
 .account-actions-container .input-email,
-.account-actions-container .input-password {
+.account-actions-container .input-password,
+.account-actions-container .input-name,
+.btn-login {
   width: 25%;
 }
 
@@ -52,7 +58,9 @@ a {
   }
 
   .account-actions-container .input-email,
-  .account-actions-container .input-password {
+  .account-actions-container .input-password,
+  .account-actions-container .input-name,
+  .btn-login {
     width: 60%;
   }
 
@@ -63,7 +71,9 @@ a {
 
 @media screen and (min-width: 600px) and (max-width: 950px) {
   .account-actions-container .input-email,
-  .account-actions-container .input-password {
+  .account-actions-container .input-password,
+  .account-actions-container .input-name,
+  .btn-login {
     width: 40%;
   }
 }

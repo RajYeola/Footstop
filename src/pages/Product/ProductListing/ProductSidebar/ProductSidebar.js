@@ -1,4 +1,4 @@
-import { useData } from "../../../../context/data-context";
+import { useData } from "../../../../context/dataContext";
 
 export function ProductSidebar() {
   const { state, dispatch } = useData();
@@ -100,11 +100,11 @@ export function ProductSidebar() {
         <div className="filter-container price-range-container">
           <h4 className="filter-name">Price Range</h4>
           <div>
-            <span>₹ 0 - {priceSlider}</span>
+            <span>₹ 249 - {priceSlider}</span>
             <input
               type="range"
-              min="0"
-              max="1000"
+              min="249"
+              max="2449"
               step="100"
               value={priceSlider}
               onChange={(e) =>
