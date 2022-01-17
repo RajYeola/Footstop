@@ -1,8 +1,6 @@
 const axios = require("axios");
 const url = "https://footstop-api.herokuapp.com";
 
-export const signUp = (userInfo) => axios.post(`${url}/user/signup`, userInfo);
-export const signIn = (userInfo) => axios.post(`${url}/user/signin`, userInfo);
 export const fetchUserData = () => axios.get(`${url}/user`);
 export const fetchProducts = () => axios.get(`${url}/products`);
 export const fetchCartItems = () => axios.get(`${url}/cart`);

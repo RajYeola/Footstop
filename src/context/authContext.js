@@ -1,7 +1,11 @@
+import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { signUp, signIn } from "../api/index";
 import { setupAuthHeaderForServiceCalls } from "../utils/setupAuthHeaderForServiceCalls";
+import {
+  emailAlreadyExistsToast,
+  invalidCredentialsToast,
+} from "../utils/Toast/toasts";
 
 const AuthContext = createContext();
 
@@ -24,7 +28,10 @@ export default function LoginProvider({ children }) {
     try {
       const {
         data: { token },
-      } = await signUp(userInfo);
+      } = await axios.post(
+        `https://footstop-api.herokuapp.com/user/signup`,
+        userInfo
+      );
 
       state === null ? navigate("/") : navigate(state?.from ? state.from : "/");
       setIsLoggedIn(true);
@@ -33,6 +40,7 @@ export default function LoginProvider({ children }) {
       localStorage.setItem("token", JSON.stringify({ token }));
     } catch (error) {
       console.error(error.message);
+      emailAlreadyExistsToast();
     }
   };
 
@@ -40,7 +48,10 @@ export default function LoginProvider({ children }) {
     try {
       const {
         data: { token },
-      } = await signIn(userInfo);
+      } = await axios.post(
+        `https://footstop-api.herokuapp.com/user/signin`,
+        userInfo
+      );
 
       state === null ? navigate("/") : navigate(state.from ? state.from : "/");
       setIsLoggedIn(true);
@@ -49,6 +60,7 @@ export default function LoginProvider({ children }) {
       localStorage.setItem("token", JSON.stringify({ token }));
     } catch (error) {
       console.error(error.message);
+      invalidCredentialsToast();
     }
   };
 
@@ -60,17 +72,16 @@ export default function LoginProvider({ children }) {
     navigate("/");
   };
 
-  // const loginWithUserCredentials = (email, password) => {
-  //   if (user.email === email && user.password === password) {
-  //     setIsLoggedIn(true);
-  //     localStorage.setItem("login", JSON.stringify({ isUserLoggedIn: true }));
-  //     navigate(state?.from ? state.from : "/");
-  //   }
-  // };
-
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, setIsLoggedIn, signin, signup, signout, token }}
+      value={{
+        isLoggedIn,
+        setIsLoggedIn,
+        signin,
+        signup,
+        signout,
+        token,
+      }}
     >
       {children}
     </AuthContext.Provider>

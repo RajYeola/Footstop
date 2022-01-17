@@ -13,6 +13,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import { lazy, Suspense } from "react";
 import { useAuth } from "./context/authContext";
 import MediaQuery from "react-responsive";
+import Signup from "./pages/Login/Signup";
 const Cart = lazy(() => import("./pages/Cart/Cart"));
 const Wishlist = lazy(() => import("./pages/Wishlist/Wishlist"));
 const ProductDetails = lazy(() =>
@@ -21,7 +22,7 @@ const ProductDetails = lazy(() =>
 const ProductListing = lazy(() =>
   import("./pages/Product/ProductListing/ProductListing")
 );
-const Login = lazy(() => import("./pages/Login"));
+const Login = lazy(() => import("./pages/Login/Login"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
             element={<Wishlist />}
           />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

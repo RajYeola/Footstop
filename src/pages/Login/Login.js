@@ -1,24 +1,24 @@
-import "../App.css";
 import React, { useState } from "react";
-// import { useNavigate } from "react-router";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../../context/authContext";
 import MediaQuery from "react-responsive";
-import NavbarMobile from "../components/Navbar/NavbarMobile";
-import HeaderMobile from "../components/Navbar/HeaderMobile";
-import { useData } from "../context/dataContext";
+import NavbarMobile from "../../components/Navbar/NavbarMobile";
+import HeaderMobile from "../../components/Navbar/HeaderMobile";
+import { useData } from "../../context/dataContext";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 export default function Login() {
-  const { isLoggedIn, signup, signin, signout } = useAuth();
+  const { isLoggedIn, signin, signout, authError } = useAuth();
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [isSignup, setIsSignup] = useState(false);
-  // const navigate = useNavigate();
   const { state: _state } = useData();
   const { cartItems, wishlistItems } = _state;
+  const navigate = useNavigate();
+  console.log(authError, isLoggedIn);
 
   const handleUserInfoData = (e) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
@@ -34,18 +34,8 @@ export default function Login() {
           <h1>You are Signed in</h1>
         ) : (
           <div className="account-actions-container disp-flex flex-column width-100 align-center">
-            <h1 className="my-05 color-primary">
-              {isSignup ? "Sign Up" : "Sign In"}
-            </h1>
-            {isSignup && (
-              <input
-                type="text"
-                name="name"
-                className="input-basic my-05 input-name"
-                placeholder="Name"
-                onChange={handleUserInfoData}
-              />
-            )}
+            <h1 className="my-05 color-primary">Sign In</h1>
+
             <input
               type="email"
               name="email"
@@ -81,28 +71,35 @@ export default function Login() {
               signout();
               cartItems.length = 0;
               wishlistItems.length = 0;
-            } else if (isSignup) {
-              signup(userInfo);
             } else {
               signin(userInfo);
             }
           }}
         >
-          {isLoggedIn ? "SIGN OUT" : isSignup ? "SIGN UP" : "SIGN IN"}
+          {isLoggedIn ? "SIGN OUT" : "SIGN IN"}
         </button>
+
         {!isLoggedIn && (
           <button
-            className="btn text-uppercase my-05"
-            onClick={() => setIsSignup((prev) => !prev)}
+            className="btn btn-signin-option text-uppercase my-05"
+            onClick={() => navigate("/signup")}
           >
-            {isSignup
-              ? "Already have an account? Sign In"
-              : "Don't have an account? Sign Up"}
+            Don't have an account? Sign Up
           </button>
         )}
       </div>
       <MediaQuery maxDeviceWidth={768}>
         <NavbarMobile />
+        <ToastContainer
+          position="bottom-center"
+          style={{ marginBottom: "3rem" }}
+        />
+      </MediaQuery>
+      <MediaQuery minDeviceWidth={769}>
+        <ToastContainer
+          position="top-right"
+          style={{ marginTop: "3.5rem", marginRight: "1rem" }}
+        />
       </MediaQuery>
     </div>
   );
