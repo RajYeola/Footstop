@@ -47,8 +47,10 @@ An e-commerce app for football lovers ⚽
    
 ### 5. Responsive Design
 
-## Deployed Link
+### Deployed Link -  [Footstop](https://foot-stop.netlify.app)
 
-### [Footstop](https://foot-stop.netlify.app)
+## Visual Representation
+
+https://user-images.githubusercontent.com/74787223/154330400-81448919-9efe-4c2c-bf0d-2f7f3d5eb466.mp4
 
 
