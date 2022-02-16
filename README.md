@@ -7,7 +7,7 @@ An e-commerce app for football lovers ⚽
 - useReducer + Context API
 - Styling using personal CSS Component Library [RapidUI](https://development-rapidui.netlify.app/)
 - React Router v6(beta) for routing
-- faker.js for data
+- Backend deployed on heroku [footstop-backend](https://github.com/RajYeola/footstop-backend)
 
 ## Functionalities
 ### 1. Product listing and details
@@ -43,17 +43,12 @@ An e-commerce app for football lovers ⚽
 
 ### 4. Authentication
 
-   - *Log in using default credentials*
-   - *Local storage persistence of auth state*
+   - Authentication using JWT token
    
-### 5. Responsive Web Design
+### 5. Responsive Design
 
-## Deployed Link and User Credentials
+## Deployed Link
 
 ### [Footstop](https://foot-stop.netlify.app)
-
-#### Email: user123@gmail.com 
-
-#### Password: User@123
 
 
