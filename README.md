@@ -44,6 +44,11 @@ An e-commerce app for football lovers ⚽
 ### 4. Authentication
 
    - Authentication using JWT token
+   - User signup
+      - Signup validation
+   - User signin and signout
+      - Signin validation
+      - Persisting login using local storage
    
 ### 5. Responsive Design
 
