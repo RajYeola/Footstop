@@ -1,5 +1,5 @@
 const axios = require("axios");
-const url = "https://footstop-api.herokuapp.com";
+const url = "https://footstop-backend.vercel.app";
 
 export const fetchUserData = () => axios.get(`${url}/user`);
 export const fetchProducts = () => axios.get(`${url}/products`);

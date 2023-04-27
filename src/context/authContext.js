@@ -29,7 +29,7 @@ export default function LoginProvider({ children }) {
       const {
         data: { token },
       } = await axios.post(
-        `https://footstop-api.herokuapp.com/user/signup`,
+        `https://footstop-backend.vercel.app/user/signup`,
         userInfo
       );
 
@@ -49,7 +49,7 @@ export default function LoginProvider({ children }) {
       const {
         data: { token },
       } = await axios.post(
-        `https://footstop-api.herokuapp.com/user/signin`,
+        `https://footstop-backend.vercel.app/user/signin`,
         userInfo
       );
 
